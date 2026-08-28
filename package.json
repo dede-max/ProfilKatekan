@@ -1,0 +1,37 @@
+{
+  "name": "web-desa-katekan",
+  "version": "1.0.0",
+  "description": "Website Resmi Dusun Katekan - Gantiwarno, Klaten",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "concurrently \"nodemon server.js\" \"vite build --watch\"",
+    "build": "vite build",
+    "start": "node server.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test-db": "node scripts/test-connection.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "memorystore": "^1.6.7",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.3",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.0.12"
+  },
+  "allowScripts": {
+    "esbuild@0.21.5": true
+  }
+}

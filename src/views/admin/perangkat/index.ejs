@@ -1,0 +1,67 @@
+<% layout('layouts/admin') %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Perangkat Dusun</h1>
+      <p class="text-gray-400 text-sm"><%= perangkat.length %> data perangkat</p>
+    </div>
+    <a href="/admin/perangkat/create" class="btn-admin">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Tambah Perangkat
+    </a>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <% if (perangkat.length > 0) { %>
+      <div class="overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Foto</th>
+              <th>Nama</th>
+              <th>Jabatan</th>
+              <th>Urutan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% perangkat.forEach((p, i) => { %>
+              <tr>
+                <td class="text-gray-400 font-medium w-12"><%= i + 1 %></td>
+                <td class="w-16">
+                  <% if (p.foto) { %>
+                    <img src="<%= p.foto %>" alt="<%= p.nama %>" class="w-10 h-10 rounded-full object-cover border-2 border-gray-100">
+                  <% } else { %>
+                    <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-sm"><%= p.nama.charAt(0) %></div>
+                  <% } %>
+                </td>
+                <td class="font-semibold text-gray-900"><%= p.nama %></td>
+                <td><span class="badge-green text-xs"><%= p.jabatan %></span></td>
+                <td class="text-gray-400 text-sm"><%= p.urutan %></td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <a href="/admin/perangkat/<%= p.id %>/edit" class="btn-edit btn-sm">Edit</a>
+                    <form action="/admin/perangkat/<%= p.id %>/delete" method="POST" data-confirm="Hapus perangkat <%= p.nama %>?">
+                      <button type="submit" class="btn-danger btn-sm">Hapus</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="text-center py-16">
+        <div class="text-5xl mb-3">👥</div>
+        <h3 class="font-bold text-gray-700 mb-1">Belum Ada Data</h3>
+        <p class="text-gray-400 text-sm mb-5">Tambahkan perangkat desa pertama.</p>
+        <a href="/admin/perangkat/create" class="btn-admin">Tambah Sekarang</a>
+      </div>
+    <% } %>
+  </div>
+</div>

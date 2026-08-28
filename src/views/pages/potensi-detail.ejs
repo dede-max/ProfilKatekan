@@ -1,0 +1,101 @@
+<% layout('layouts/main') %>
+
+<!-- Breadcrumb + Hero -->
+<section class="hero-gradient py-20 relative overflow-hidden">
+  <div class="container-wrap relative z-10" data-aos="fade-up">
+    <nav class="flex items-center gap-2 text-sm text-primary-300 mb-6">
+      <a href="/" class="hover:text-white">Beranda</a>
+      <span>/</span>
+      <a href="/potensi" class="hover:text-white">Potensi</a>
+      <span>/</span>
+      <span class="text-white"><%= potensi.judul %></span>
+    </nav>
+    <div class="inline-block badge bg-primary-400/20 text-primary-300 mb-4"><%= potensi.kategori || 'Potensi Dusun' %></div>
+    <h1 class="text-3xl lg:text-5xl font-extrabold text-white mb-4 text-shadow max-w-3xl"><%= potensi.judul %></h1>
+    <% if (potensi.deskripsi_singkat) { %>
+      <p class="text-primary-200 text-lg max-w-2xl"><%= potensi.deskripsi_singkat %></p>
+    <% } %>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 50" fill="white" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 50L1440 50L1440 20C1200 40 960 50 720 50C480 50 240 35 0 20V50Z"/></svg>
+  </div>
+</section>
+
+<!-- Content -->
+<section class="section-pad bg-white">
+  <div class="container-wrap">
+    <div class="grid lg:grid-cols-3 gap-10">
+
+      <!-- Main -->
+      <div class="lg:col-span-2">
+        <% if (potensi.foto) { %>
+          <div class="mb-8 rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up">
+            <a href="<%= potensi.foto %>" class="glightbox" data-title="<%= potensi.judul %>">
+              <img src="<%= potensi.foto %>" alt="<%= potensi.judul %>" class="w-full h-80 object-cover hover:scale-105 transition-transform duration-500">
+            </a>
+          </div>
+        <% } %>
+
+        <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed" data-aos="fade-up">
+          <% if (potensi.deskripsi) { %>
+            <% potensi.deskripsi.split('\n').forEach(para => { %>
+              <% if (para.trim()) { %><p class="mb-4"><%= para.trim() %></p><% } %>
+            <% }) %>
+          <% } else { %>
+            <p>Deskripsi detail belum tersedia.</p>
+          <% } %>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-100" data-aos="fade-up">
+          <a href="/potensi" class="btn-secondary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Kembali ke Potensi
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Info card -->
+        <div class="bg-gray-50 rounded-2xl p-6" data-aos="fade-left">
+          <h3 class="font-bold text-gray-900 mb-4">Informasi</h3>
+          <dl class="space-y-3 text-sm">
+            <div class="flex gap-2">
+              <dt class="text-gray-400 w-24 flex-shrink-0">Kategori</dt>
+              <dd class="font-semibold text-gray-700"><%= potensi.kategori || '—' %></dd>
+            </div>
+            <div class="flex gap-2">
+              <dt class="text-gray-400 w-24 flex-shrink-0">Diposting</dt>
+              <dd class="font-semibold text-gray-700">
+                <%= new Date(potensi.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Related -->
+        <% if (related && related.length > 0) { %>
+          <div data-aos="fade-left" data-aos-delay="100">
+            <h3 class="font-bold text-gray-900 mb-4">Potensi Terkait</h3>
+            <div class="space-y-3">
+              <% related.forEach(r => { %>
+                <a href="/potensi/<%= r.slug %>" class="flex gap-3 items-center p-3 bg-gray-50 rounded-xl hover:bg-primary-50 transition-colors group">
+                  <% if (r.foto) { %>
+                    <img src="<%= r.foto %>" alt="<%= r.judul %>" class="w-14 h-14 object-cover rounded-lg flex-shrink-0">
+                  <% } else { %>
+                    <div class="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0 text-2xl">🌾</div>
+                  <% } %>
+                  <div class="min-w-0">
+                    <div class="font-semibold text-gray-800 text-sm leading-tight group-hover:text-primary-700 truncate"><%= r.judul %></div>
+                    <div class="text-xs text-gray-400 mt-0.5"><%= r.kategori %></div>
+                  </div>
+                </a>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,79 @@
+<% layout('layouts/admin') %>
+
+<div class="space-y-6">
+
+  <!-- Page Title -->
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+    <p class="text-gray-400 text-sm mt-1">Selamat datang, <strong><%= currentUser?.nama %></strong> 👋</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+    <% const statCards = [
+      { label: 'Perangkat Dusun', value: stats.perangkat, icon: '👥', color: 'bg-primary-50 text-primary-700', link: '/admin/perangkat' },
+      { label: 'Potensi Dusun',   value: stats.potensi,   icon: '⭐', color: 'bg-amber-50 text-amber-700',    link: '/admin/potensi' },
+      { label: 'Foto Galeri',    value: stats.galeri,    icon: '📷', color: 'bg-blue-50 text-blue-700',      link: '/admin/galeri' },
+    ] %>
+    <% statCards.forEach(card => { %>
+      <a href="<%= card.link %>" class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-2xl"><%= card.icon %></div>
+          <div class="w-8 h-8 flex items-center justify-center text-gray-300 group-hover:text-primary-400 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </div>
+        </div>
+        <div class="text-3xl font-extrabold text-gray-900 mb-1"><%= card.value %></div>
+        <div class="text-sm text-gray-400 font-medium"><%= card.label %></div>
+      </a>
+    <% }) %>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <h2 class="font-bold text-gray-900 mb-5">Aksi Cepat</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <% const actions = [
+        { href: '/admin/profil',           label: 'Edit Profil',     icon: '🏛️' },
+        { href: '/admin/perangkat/create', label: 'Tambah Perangkat',icon: '👤' },
+        { href: '/admin/potensi/create',   label: 'Tambah Potensi',  icon: '⭐' },
+        { href: '/admin/galeri/create',    label: 'Upload Foto',     icon: '📸' },
+      ] %>
+      <% actions.forEach(a => { %>
+        <a href="<%= a.href %>" class="flex flex-col items-center gap-2 p-4 bg-gray-50 hover:bg-primary-50 rounded-xl transition-colors text-center group">
+          <span class="text-2xl"><%= a.icon %></span>
+          <span class="text-xs font-semibold text-gray-600 group-hover:text-primary-700"><%= a.label %></span>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Recent Gallery -->
+  <% if (recentGaleri && recentGaleri.length > 0) { %>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold text-gray-900">Foto Terbaru</h2>
+        <a href="/admin/galeri" class="text-sm text-primary-600 hover:text-primary-800 font-medium">Lihat semua →</a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <% recentGaleri.forEach(g => { %>
+          <div class="aspect-square rounded-xl overflow-hidden">
+            <img src="<%= g.foto %>" alt="<%= g.judul || 'Foto' %>" class="w-full h-full object-cover">
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- Info Box -->
+  <div class="bg-primary-50 border border-primary-100 rounded-2xl p-5">
+    <div class="flex gap-3">
+      <div class="text-2xl">💡</div>
+      <div>
+        <p class="font-semibold text-primary-800 text-sm">Tips Admin</p>
+        <p class="text-primary-600 text-sm mt-1">Gunakan menu di sidebar untuk mengelola konten website. Perubahan akan langsung terlihat di website publik setelah disimpan.</p>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,59 @@
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm">
+  <div class="container-wrap">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 bg-primary-700 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md group-hover:bg-primary-800 transition-colors">K</div>
+        <div class="hidden sm:block">
+          <div class="font-bold text-gray-900 text-sm leading-tight">Dusun Katekan</div>
+          <div class="text-primary-600 text-xs">Gantiwarno, Klaten</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-1">
+        <% const navLinks = [
+          { href: '/',        label: 'Beranda' },
+          { href: '/profil',  label: 'Profil' },
+          { href: '/potensi', label: 'Potensi' },
+          { href: '/galeri',  label: 'Galeri' },
+        ] %>
+        <% navLinks.forEach(link => { %>
+          <a href="<%= link.href %>"
+             class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    <%= currentPath === link.href
+                        ? 'bg-primary-700 text-white shadow-sm'
+                        : 'text-gray-600 hover:text-primary-700 hover:bg-primary-50' %>">
+            <%= link.label %>
+          </a>
+        <% }) %>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors" aria-label="Menu" aria-expanded="false">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+    <div class="container-wrap py-3 space-y-1">
+      <% navLinks.forEach(link => { %>
+        <a href="<%= link.href %>"
+           class="block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+                  <%= currentPath === link.href
+                      ? 'bg-primary-700 text-white'
+                      : 'text-gray-700 hover:bg-primary-50 hover:text-primary-700' %>">
+          <%= link.label %>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-16"></div>

@@ -1,0 +1,43 @@
+<% layout('layouts/admin') %>
+
+<div class="max-w-xl space-y-6">
+  <div class="flex items-center gap-3">
+    <a href="/admin/galeri" class="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Edit Foto</h1>
+      <p class="text-gray-400 text-sm">Ubah info foto galeri</p>
+    </div>
+  </div>
+
+  <form action="/admin/galeri/<%= galeri.id %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
+
+    <div class="form-group">
+      <label class="form-label">Foto Saat Ini</label>
+      <img id="foto-preview" src="<%= galeri.foto %>" alt="<%= galeri.judul || 'Foto' %>"
+           class="w-full h-56 object-cover rounded-xl border border-gray-200 mb-3">
+      <label class="form-label mt-3">Ganti Foto (opsional)</label>
+      <input type="file" name="foto" accept="image/*" class="form-input py-2 text-sm" data-preview="foto-preview">
+      <p class="form-hint">Biarkan kosong jika tidak ingin mengubah foto.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Judul Foto</label>
+      <input type="text" name="judul" class="form-input" value="<%= galeri.judul || '' %>" placeholder="Judul foto">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Keterangan</label>
+      <textarea name="keterangan" class="form-textarea" rows="2" placeholder="Keterangan foto..."><%= galeri.keterangan || '' %></textarea>
+    </div>
+
+    <div class="flex gap-3 pt-2">
+      <button type="submit" class="btn-admin px-6 py-2.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Simpan Perubahan
+      </button>
+      <a href="/admin/galeri" class="btn-secondary py-2.5 px-5 text-sm">Batal</a>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,79 @@
+<% layout('layouts/admin') %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Potensi Dusun</h1>
+      <p class="text-gray-400 text-sm"><%= potensi.length %> data potensi</p>
+    </div>
+    <a href="/admin/potensi/create" class="btn-admin">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Tambah Potensi
+    </a>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <% if (potensi.length > 0) { %>
+      <div class="overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Foto</th>
+              <th>Judul</th>
+              <th>Kategori</th>
+              <th>Dibuat</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% potensi.forEach((p, i) => { %>
+              <tr>
+                <td class="text-gray-400 w-12"><%= i + 1 %></td>
+                <td class="w-16">
+                  <% if (p.foto) { %>
+                    <img src="<%= p.foto %>" alt="<%= p.judul %>" class="w-12 h-10 rounded-lg object-cover border border-gray-100">
+                  <% } else { %>
+                    <div class="w-12 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-xl">🌾</div>
+                  <% } %>
+                </td>
+                <td>
+                  <div class="font-semibold text-gray-900 text-sm"><%= p.judul %></div>
+                  <% if (p.deskripsi_singkat) { %>
+                    <div class="text-xs text-gray-400 truncate max-w-xs"><%= p.deskripsi_singkat.substring(0, 60) %>...</div>
+                  <% } %>
+                </td>
+                <td>
+                  <span class="badge-green text-xs"><%= p.kategori || '—' %></span>
+                </td>
+                <td class="text-gray-400 text-xs whitespace-nowrap">
+                  <%= new Date(p.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                </td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <a href="/potensi/<%= p.slug %>" target="_blank" class="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors" title="Lihat">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <a href="/admin/potensi/<%= p.id %>/edit" class="btn-edit btn-sm">Edit</a>
+                    <form action="/admin/potensi/<%= p.id %>/delete" method="POST" data-confirm="Hapus potensi '<%= p.judul %>'?">
+                      <button type="submit" class="btn-danger btn-sm">Hapus</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="text-center py-16">
+        <div class="text-5xl mb-3">⭐</div>
+        <h3 class="font-bold text-gray-700 mb-1">Belum Ada Potensi</h3>
+        <p class="text-gray-400 text-sm mb-5">Tambahkan potensi desa pertama.</p>
+        <a href="/admin/potensi/create" class="btn-admin">Tambah Sekarang</a>
+      </div>
+    <% } %>
+  </div>
+</div>

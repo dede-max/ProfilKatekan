@@ -1,0 +1,59 @@
+<% layout('layouts/admin') %>
+
+<div class="max-w-2xl space-y-6">
+  <div class="flex items-center gap-3">
+    <a href="/admin/potensi" class="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Edit Potensi</h1>
+      <p class="text-gray-400 text-sm">Ubah data potensi dusun</p>
+    </div>
+  </div>
+
+  <form action="/admin/potensi/<%= potensi.id %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
+    <div class="form-group">
+      <label class="form-label">Judul Potensi <span class="text-red-500">*</span></label>
+      <input type="text" name="judul" class="form-input" required value="<%= potensi.judul %>">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Kategori</label>
+      <select name="kategori" class="form-select">
+        <option value="">— Pilih Kategori —</option>
+        <% kategoriList.forEach(k => { %>
+          <option value="<%= k %>" <%= potensi.kategori === k ? 'selected' : '' %>><%= k %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Deskripsi Singkat</label>
+      <textarea name="deskripsi_singkat" class="form-textarea" rows="2"><%= potensi.deskripsi_singkat || '' %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Deskripsi Lengkap</label>
+      <textarea name="deskripsi" class="form-textarea" rows="8"><%= potensi.deskripsi || '' %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Foto</label>
+      <% if (potensi.foto) { %>
+        <img id="foto-preview" src="<%= potensi.foto %>" alt="<%= potensi.judul %>" class="w-full h-48 object-cover rounded-xl border border-gray-200 mb-3">
+      <% } else { %>
+        <img id="foto-preview" class="w-full h-48 object-cover rounded-xl border border-gray-200 mb-3 hidden" alt="Preview">
+      <% } %>
+      <input type="file" name="foto" accept="image/*" class="form-input py-2 text-sm" data-preview="foto-preview">
+      <p class="form-hint">Biarkan kosong jika tidak ingin mengubah foto.</p>
+    </div>
+
+    <div class="flex gap-3 pt-2">
+      <button type="submit" class="btn-admin px-6 py-2.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Simpan Perubahan
+      </button>
+      <a href="/admin/potensi" class="btn-secondary py-2.5 px-5 text-sm">Batal</a>
+    </div>
+  </form>
+</div>

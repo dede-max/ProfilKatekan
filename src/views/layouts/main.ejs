@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' — Dusun Katekan' : 'Dusun Katekan' %></title>
+  <meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Website resmi Dusun Katekan.' %>">
+  <meta name="theme-color" content="#15803d">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- GLightbox -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <!-- Compiled CSS -->
+  <link rel="stylesheet" href="/dist/main.css">
+</head>
+<body class="font-sans bg-white text-gray-800">
+
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/flash') %>
+
+  <main><%- body %></main>
+
+  <%- include('../partials/footer') %>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="/dist/main.js" defer></script>
+</body>
+</html>
